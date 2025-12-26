@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyRadiance - About Us</title>
+
+  <style>
+    /* --- General & Reset Styles (from index.html) --- */
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif; /* Web-safe font */
+        background-color: #FCF8F3; /* Soft Almond/Beige */
+        color: #3D405B; /* Dark Slate Blue */
+        line-height: 1.6;
+    }
+
+    *, *::before, *::after {
+        box-sizing: border-box;
+    }
+
+    /* --- Reusable Components & Layout --- */
+    .container {
+        max-width: 1100px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .section {
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 12px 28px;
+        border-radius: 9999px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+        border: none;
+        background-color: #81B29A;
+        color: #fff;
+        width: 100%;
+    }
+
+    .btn:hover {
+        background-color: #6E9C84;
+    }
+
+    /* --- Typography (from index.html) --- */
+    h1, h2, h3, h4 {
+        font-family: Georgia, 'Times New Roman', Times, serif; /* Web-safe serif font */
+        color: #333333;
+        margin-top: 0;
+    }
+
+    h1 { font-size: 3rem; margin-bottom: 1rem; }
+    h2 { font-size: 2.5rem; margin-bottom: 1.5rem; }
+    h3 { font-size: 1.4rem; }
+    p { margin: 0 0 1rem 0; }
+    
+    /* --- Header / Navbar (from index.html) --- */
+    .main-header {
+        padding: 15px 0;
+        position: sticky;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 50;
+        background-color: rgba(252, 248, 243, 0.9); /* Translucent Almond/Beige */
+        backdrop-filter: blur(5px);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .main-header .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        color: #333;
+        text-decoration: none;
+    }
+
+    .main-nav a {
+        color: #3D405B;
+        text-decoration: none;
+        margin-left: 25px;
+        font-weight: bold;
+    }
+
+    .main-nav a:hover {
+        color: #333;
+    }
+    
+    .main-nav .nav-button {
+        background-color: #81B29A;
+        color: white;
+        padding: 0.5rem 1.25rem;
+        border-radius: 9999px;
+        transition: background-color 0.2s;
+    }
+    
+    .main-nav .nav-button:hover {
+         background-color: #6E9C84;
+         color: white;
+    }
+
+    .mobile-menu-btn {
+        display: none; /* Hidden on desktop */
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem;
+    }
+    
+    .mobile-menu-btn svg {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+    
+    .mobile-menu {
+      display: none; /* Initially hidden */
+      background-color: #FCF8F3;
+      padding-bottom: 1rem;
+    }
+    .mobile-menu a {
+      display: block;
+      text-align: center;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #3D405B;
+      text-decoration: none;
+    }
+    .mobile-menu a:hover {
+      background-color: #EAF4F4;
+    }
+    
+    /* --- Hero Section (Adapted from index.html) --- */
+    .hero {
+        padding: 100px 20px;
+        text-align: center;
+        background-image: linear-gradient(rgba(252, 248, 243, 0.4)), url('../imgs/Abouthero.png');
+        background-size: cover;
+        background-position: center;
+        color: #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .hero-content {
+        max-width: 800px;
+    }
+
+    /* --- Grid Layouts --- */
+    .grid { display: grid; gap: 40px; }
+    .grid-cols-2 { grid-template-columns: 1fr 1fr; }
+    .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+    /* --- Card & Section Specific Styles --- */
+    .bg-secondary { background-color: #EAF4F4; }
+    
+    .value-card, .timeline-item, .team-member, .why-card {
+        background-color: #fff;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+    
+    .mission-section .grid { align-items: center; }
+    .value-card .icon { font-size: 2rem; margin-bottom: 10px; }
+
+    .timeline {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+    .timeline-item h4 { color: #81B29A; }
+    .timeline-item { max-width: 280px; }
+
+    .team-photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 20px;
+      border: 4px solid #EAF4F4;
+    }
+    
+    /* --- Contact Section --- */
+    .contact-grid { align-items: start; }
+    .contact-form input, .contact-form textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    .contact-form input:focus, .contact-form textarea:focus {
+      outline: none;
+      border-color: #81B29A;
+      box-shadow: 0 0 0 3px rgba(129, 178, 154, 0.2);
+    }
+    .form-group { margin-bottom: 20px; }
+    #form-message { margin-top: 15px; font-weight: 500; }
+    
+    /* --- Footer --- */
+    .footer {
+      padding-top: 15px; 
+      padding-bottom: 5px;
+      text-align: center; 
+      background-color: #333;
+      color: #f4f4f4;
+      font-size: 0.9rem; 
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 768px) {
+      h1 { font-size: 2.2rem; }
+      h2 { font-size: 1.8rem; }
+      .grid-cols-2, .grid-cols-3, .grid-cols-4 { grid-template-columns: 1fr; }
+      .main-nav { display: none; }
+      .mobile-menu-btn { display: block; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="main-header">
+    <div class="container">
+      <a href="../index.html" class="logo">MyRadiance</a>
+      <nav class="main-nav">
+        <a href="skinscience.html">Skin Science</a>
+        <a href="remedies.html">Remedies</a>
+        <a href="products.html">Products</a>
+        <a href="about.html">About Us</a>
+        <a href="askaderm.html" class="nav-button">Ask a Derm</a>
+      </nav>
+      <button id="mobile-menu-button" class="mobile-menu-btn" aria-label="Open menu">
+        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"></path></svg>
+      </button>
+    </div>
+  </header>
+  
+  <div id="mobile-menu" class="mobile-menu">
+      <a href="skinscience.html">Skin Science</a>
+      <a href="remedies.html">Remedies</a>
+      <a href="about.html">About Us</a>
+      <a href="askaderm.html">Ask a Derm</a>
+  </div>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Honest Skincare Education for All.</h1>
+        <p>We're on a journey to demystify skincare, providing clear, science-backed insights without the industry hype.</p>
+      </div>
+    </section>
+
+    <section class="section mission-section">
+      <div class="container grid grid-cols-2">
+        <div>
+          <h2>Our Mission</h2>
+          <p>We aim to make skincare education simple, natural, and accessible to everyone. No jargon, no false promises — just clarity and care.</p>
+        </div>
+        <div class="grid grid-cols-3">
+          <div class="value-card">
+            <div class="icon">💡</div>
+            <h4>Simplicity</h4>
+            <p>Clear facts, not trends.</p>
+          </div>
+          <div class="value-card">
+            <div class="icon">🌿</div>
+            <h4>Natural Care</h4>
+            <p>Inspired by nature.</p>
+          </div>
+          <div class="value-card">
+            <div class="icon">🤝</div>
+            <h4>Inclusivity</h4>
+            <p>For every skin type.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section bg-secondary text-center">
+      <div class="container">
+        <h2>Our Journey So Far</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <h4>2025</h4>
+            <p>MyRadiance was born as a small awareness project to simplify skincare.</p>
+          </div>
+          <div class="timeline-item">
+            <h4>2026</h4>
+            <p>Built a growing digital community passionate about honest education.</p>
+          </div>
+          <div class="timeline-item">
+            <h4>Future</h4>
+            <p>Expanding into AI-powered skin insights to provide personalized care.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section text-center">
+      <div class="container">
+        <h2>Meet Our Team</h2>
+        <p>MyRadiance is brought to you by a passionate team dedicated to making skincare understandable.</p>
+        <div class="grid grid-cols-3">
+          <div class="team-member">
+            <img src="https://placehold.co/150x150/81B29A/FFFFFF?text=AC" alt="Ashutosh Chaudhari" class="team-photo">
+            <h4>Ashutosh Chaudhari</h4>
+            <p>Technical Lead</p>
+          </div>
+          <div class="team-member">
+            <img src="https://placehold.co/150x150/FDE6C3/3D405B?text=VD" alt="Vaishnavi Deshmukh" class="team-photo">
+            <h4>Vaishnavi Deshmukh</h4>
+            <p>Creative Director</p>
+          </div>
+          <div class="team-member">
+            <img src="https://placehold.co/150x150/EADBC8/3D405B?text=VU" alt="Vedant Ugale" class="team-photo">
+            <h4>Vedant Ugale</h4>
+            <p>Operations Lead</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section text-center">
+        <div class="container">
+          <h2>Why Choose MyRadiance</h2>
+          <div class="grid grid-cols-4">
+            <div class="why-card"><h4>No Ads. No Hype.</h4></div>
+            <div class="why-card"><h4>Backed by Research.</h4></div>
+            <div class="why-card"><h4>For Every Skin Type.</h4></div>
+            <div class="why-card"><h4>Designed with Empathy.</h4></div>
+          </div>
+        </div>
+      </section>
+
+    <section class="section contact-section bg-secondary">
+      <div class="container">
+        <h2 class="text-center">Get in Touch</h2>
+        <div class="grid grid-cols-2 contact-grid">
+          <div>
+            <p>Have a question, feedback, or collaboration idea? We’d love to hear from you. Fill out the form and our team will respond soon.</p>
+          </div>
+          <form id="contact-form" class="contact-form">
+            <div class="form-group">
+              <input type="text" id="name" placeholder="Your Name" required>
+            </div>
+            <div class="form-group">
+              <input type="email" id="email" placeholder="Your Email" required>
+            </div>
+            <div class="form-group">
+              <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
+            </div>
+            <button type="submit" class="btn">Submit</button>
+            <p id="form-message"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer text-center">
+    <div class="container">
+      <p>&copy; 2025 MyRadiance. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // --- Mobile Menu Toggle ---
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (mobileMenuButton && mobileMenu) {
+      mobileMenuButton.addEventListener('click', () => {
+        const isHidden = mobileMenu.style.display === 'none' || mobileMenu.style.display === '';
+        mobileMenu.style.display = isHidden ? 'block' : 'none';
+      });
+    }
+  
+    // Contact Form Submission Validation
+    const contactForm = document.getElementById('contact-form');
+    const formMessage = document.getElementById('form-message');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+          e.preventDefault(); // Prevent actual form submission
+          
+          const name = document.getElementById('name').value;
+          const email = document.getElementById('email').value;
+          const message = document.getElementById('message').value;
+
+          if (name && email && message) {
+            formMessage.textContent = "Thank you! Your message has been sent.";
+            formMessage.style.color = 'green';
+            contactForm.reset();
+          } else {
+            formMessage.textContent = "Please fill out all fields.";
+            formMessage.style.color = 'red';
+          }
+
+          // Hide the message after 4 seconds
+          setTimeout(() => {
+            formMessage.textContent = '';
+          }, 4000);
+        });
+    }
+  </script>
+
+</body>
+</html>
+

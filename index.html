@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyRadiance - Skincare Knowledge For Everyone</title>
+    <!-- CSS is now embedded directly in the HTML file -->
+    <style>
+        /* --- General & Reset Styles --- */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif; /* Web-safe font */
+            background-color: #FCF8F3; /* Soft Almond/Beige */
+            color: #3D405B; /* Dark Slate Blue */
+            line-height: 1.6;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        /* --- Reusable Components & Layout --- */
+        .container {
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .section {
+            padding-top: 60px;
+            padding-bottom: 60px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 9999px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: #81B29A; /* Muted Teal/Green */
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: #6E9C84; /* Darker Teal/Green */
+            transform: translateY(-2px);
+        }
+
+        /* --- Typography --- */
+        h1, h2, h3, h4 {
+            font-family: Georgia, 'Times New Roman', Times, serif; /* Web-safe serif font */
+            color: #333333;
+            margin-top: 0;
+        }
+
+        h1 { font-size: 3rem; }
+        h2 { font-size: 2.5rem; }
+        h3 { font-size: 1.25rem; }
+        h4 { font-size: 1.1rem; }
+
+        /* --- Header / Navbar --- */
+        .main-header {
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+            background-color: rgba(252, 248, 243, 0.9); /* Translucent Almond/Beige */
+            backdrop-filter: blur(5px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .main-nav a {
+            color: #3D405B;
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: bold;
+        }
+
+        .main-nav a:hover {
+            color: #333;
+        }
+        
+        .main-nav .nav-button {
+            background-color: #81B29A;
+            color: white;
+            padding: 0.5rem 1.25rem;
+            border-radius: 9999px;
+            transition: background-color 0.2s;
+        }
+        
+        .main-nav .nav-button:hover {
+             background-color: #6E9C84;
+             color: white;
+        }
+
+        .mobile-menu-btn {
+            display: none; /* Hidden on desktop */
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        
+        .mobile-menu-btn svg {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+        
+        .mobile-menu {
+          display: none; /* Initially hidden */
+          background-color: #FCF8F3;
+          padding-bottom: 1rem;
+        }
+        .mobile-menu a {
+          display: block;
+          text-align: center;
+          padding: 0.75rem 1rem;
+          font-weight: 600;
+          font-size: 0.9rem;
+          color: #3D405B;
+          text-decoration: none;
+        }
+        .mobile-menu a:hover {
+          background-color: #EAF4F4;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: url('../imgs/Homehero.png');
+            background-size: cover;
+            background-position: center;
+            color: #333;
+        }
+
+        .hero-overlay {
+            background-color: rgba(241, 240, 238, 0.5);
+            padding: 40px 20px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 20px auto 30px;
+        }
+
+        /* --- Grid Layouts --- */
+        .grid {
+            display: grid;
+            gap: 30px;
+        }
+
+        .grid-cols-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .grid-cols-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        /* --- Card Styles --- */
+        .card {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(129, 178, 154, 0.15);
+        }
+
+        /* --- Specific Sections --- */
+        .bg-secondary { background-color: #EAF4F4; }
+        .text-accent { color: #81B29A; }
+        .did-you-know .card .stat {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .testimonials blockquote {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .testimonials cite {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            font-style: normal;
+        }
+        
+        /* --- START: Gemini AI Feature Styles --- */
+        .gemini-feature-section {
+            background-color: #fff;
+        }
+        .gemini-controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        .gemini-controls select {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            background-color: #fff;
+            min-width: 200px;
+        }
+        .gemini-result-container {
+            margin: 0 auto;
+            max-width: 700px;
+            min-height: 100px;
+            padding: 25px;
+            border-radius: 8px;
+            background-color: #EAF4F4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: left;
+            font-family: Georgia, serif;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            border: 1px solid #d4e0e0;
+        }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: #81B29A;
+            animation: spin 1s ease infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* --- END: Gemini AI Feature Styles --- */
+
+
+        .cta-banner {
+            background-color: #81B29A;
+            color: #fff;
+        }
+
+        .cta-banner h2 { color: #fff; }
+
+        .mens-section-redesigned {
+            background-color: #3D405B;
+            color: #f4f4f4;
+        }
+
+        .mens-section-redesigned h2, .mens-section-redesigned h4 {
+            color: #fff;
+        }
+
+        .mens-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .mens-intro p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+        }
+
+        .btn-secondary:hover {
+            background-color: #fff;
+            color: #3D405B;
+        }
+
+        .fact-item {
+            margin-bottom: 25px;
+            border-left: 3px solid #81B29A;
+            padding-left: 20px;
+        }
+
+        .fact-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .fact-item h4 {
+            margin-bottom: 5px;
+        }
+
+        .main-footer {
+            background-color: #333;
+            color: #f4f4f4;
+        }
+
+        .main-footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .social-links {
+            margin: 6px 0;
+        }
+
+        .social-links a {
+            margin: 0 6px;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            
+            .main-nav {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .grid-cols-3, .grid-cols-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .mens-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Navbar -->
+    <header class="main-header">
+        <div class="container">
+            <a href="index.html" class="logo">MyRadiance</a>
+            
+            <nav class="main-nav">
+                <a href="/html_files/skinscience.html">Skin Science</a>
+                <a href="/html_files/remedies.html">Remedies</a>
+                <a href="/html_files/products.html">Products</a>
+                <a href="/html_files/about.html">About Us</a>
+                <a href="/html_files/askaderm.html" class="nav-button">Ask a Derm</a>
+            </nav>
+
+            <button id="mobile-menu-button" class="mobile-menu-btn" aria-label="Open menu">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"></path></svg>
+            </button>
+        </div>
+    </header>
+    
+    <div id="mobile-menu" class="mobile-menu">
+      <a href="skinscience.html">Skin Science</a>
+      <a href="remedies.html">Remedies</a>
+      <a href="about.html">About Us</a>
+      <a href="askaderm.html">Ask a Derm</a>
+    </div>
+
+    <main>
+        <!-- 2. Hero Section -->
+        <section class="hero text-center">
+            <div class="hero-overlay">
+                <div class="hero-content">
+                    <h1>Because glowing skin starts with knowledge — for everyone.</h1>
+                    <p>MyRadiance is on a mission to educate, inform, and inspire your journey to healthier skin with safe, simple, and effective guidance.</p>
+                    <a href="#quick-tips" class="btn btn-primary">Explore MyRadiance</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Quick Tips / Skincare Nuggets -->
+        <section id="quick-tips" class="section bg-secondary text-center">
+            <div class="container">
+                <div class="grid grid-cols-3">
+                    <div>
+                        <h3>Drink Water Daily</h3>
+                        <p>Hydration is key. Aim for 8 glasses of water a day to help flush toxins and keep skin plump.</p>
+                    </div>
+                    <div>
+                        <h3>Cleanse Gently</h3>
+                        <p>Wash your face twice a day with a mild cleanser to remove dirt and oil without stripping natural moisture.</p>
+                    </div>
+                    <div>
+                        <h3>Always Use Sunscreen</h3>
+                        <p>Protect your skin from UV damage every single day. It's the best anti-aging secret.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Did You Know / Fun Facts -->
+        <section class="section did-you-know text-center">
+            <div class="container">
+                <h2>Did You Know?</h2>
+                <div class="grid grid-cols-3" style="margin-top: 40px;">
+                    <div class="card">
+                        <div class="stat text-accent">28 Days</div>
+                        <h3>Your skin completely renews itself about once a month.</h3>
+                    </div>
+                    <div class="card">
+                        <div class="stat text-accent">60%</div>
+                        <h3>Of people may be using the wrong moisturizer for their skin type.</h3>
+                    </div>
+                    <div class="card">
+                        <div class="stat text-accent">8 Hours</div>
+                        <h3>Of quality sleep can help prevent dark circles and repair skin cells.</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 5. Mini Testimonials -->
+        <section class="section testimonials bg-secondary text-center">
+             <div class="container">
+                <h2>Trusted by Readers</h2>
+                <div class="grid grid-cols-3" style="margin-top: 40px;">
+                    <blockquote>
+                        <p>"I never knew how important hydration was until MyRadiance! It’s explained so simply here. A total game-changer."</p>
+                        <cite>- Vedant Patel.</cite>
+                    </blockquote>
+                    <blockquote>
+                        <p>"Finally, skincare advice that isn't trying to sell me something. Just simple remedies and facts that actually work."</p>
+                        <cite>- Vaishnavi Sharma.</cite>
+                    </blockquote>
+                    <blockquote>
+                        <p>"As a guy who knew nothing about skincare, this site was the perfect starting point. No fluff, just facts."</p>
+                        <cite>- Ashutosh Kumar.</cite>
+                    </blockquote>
+                </div>
+             </div>
+        </section>
+
+        <!-- START: Gemini AI Feature Section -->
+        <section class="section gemini-feature-section text-center">
+            <div class="container">
+                <h2>✨ Your Daily Glow Tip</h2>
+                <p style="max-width: 700px; margin: 20px auto 0;">Select your skin type and concern, and let our AI provide a personalized tip just for you.</p>
+                <div class="gemini-controls">
+                    <select id="skin-type-select">
+                        <option value="Oily">Oily Skin</option>
+                        <option value="Dry">Dry Skin</option>
+                        <option value="Combination">Combination Skin</option>
+                        <option value="Sensitive">Sensitive Skin</option>
+                        <option value="Normal">Normal Skin</option>
+                    </select>
+                    <select id="skin-concern-select">
+                        <option value="Acne">Acne</option>
+                        <option value="Dullness">Dullness</option>
+                        <option value="Fine Lines">Fine Lines</option>
+                        <option value="Redness">Redness</option>
+                        <option value="Dark Spots">Dark Spots</option>
+                    </select>
+                    <button id="get-tip-btn" class="btn btn-primary">Get My Tip</button>
+                </div>
+                <div id="gemini-result" class="gemini-result-container">
+                    Your personalized tip will appear here.
+                </div>
+            </div>
+        </section>
+        <!-- END: Gemini AI Feature Section -->
+
+
+        <!-- 6. Call-to-Action Banner -->
+        <section class="section cta-banner text-center">
+            <div class="container">
+                <h2>Ready to Transform Your Skin?</h2>
+                <p style="max-width: 700px; margin: 20px auto 30px;">Discover your unique skin type or try simple, effective home remedies today. Knowledge is your most powerful tool.</p>
+                <a href="skinscience.html" class="btn" style="background-color: #fff; color: #81B29A; margin-right: 10px;">Discover Your Skin Type</a>
+                <a href="remedies.html" class="btn" style="border: 2px solid #fff; color: #fff;">Explore Home Remedies</a>
+            </div>
+        </section>
+
+        <!-- 7 & 8. Men's Section Redesigned -->
+        <section class="section mens-section-redesigned">
+            <div class="container">
+                <div class="mens-grid">
+                    <div class="mens-intro">
+                        <h2>Skincare is for everyone. Period.</h2>
+                        <p>Forget the myths. Taking care of your skin is a basic part of health and confidence. We cut through the noise with straightforward facts and tips.</p>
+                        <a href="skinscience.html" class="btn btn-secondary">Get the Facts</a>
+                    </div>
+                    <div class="mens-facts">
+                        <div class="fact-item">
+                            <h4>Your Skin is 25% Thicker</h4>
+                            <p>It's more resilient, but that doesn't make it invincible. It needs protection and hydration.</p>
+                        </div>
+                        <div class="fact-item">
+                            <h4>Beard Care is Skincare</h4>
+                            <p>Properly cleaning and moisturizing the skin under your beard prevents irritation and breakouts.</p>
+                        </div>
+                         <div class="fact-item">
+                            <h4>Shaving is Exfoliation</h4>
+                            <p>It can lead to sensitivity. Using a moisturizer post-shave is non-negotiable.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 11. Newsletter -->
+        <section class="section bg-secondary text-center">
+            <div class="container" style="max-width: 600px;">
+                 <h2>Get Daily Skincare Tips</h2>
+                 <p style="margin-top: 15px; margin-bottom: 25px;">Subscribe to our newsletter for a daily dose of wisdom, delivered straight to your inbox.</p>
+                 <form id="newsletter-form" style="display: flex; flex-direction: column; gap: 10px;">
+                    <div style="display: flex; gap: 10px;">
+                        <input type="email" id="newsletter-email" placeholder="Enter your email" style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px;" required>
+                        <button type="submit" class="btn btn-primary" style="border-radius: 5px;">Subscribe</button>
+                    </div>
+                    <p id="newsletter-message" style="min-height: 20px; font-weight: 500; margin-top: 5px;"></p>
+                 </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- 12. Footer -->
+    <footer class="main-footer section text-center" style="padding-top: 6px; padding-bottom: 1px;">
+        <div class="container">
+             <a href="index.html" class="logo" style="color: #fff; font-size: 1.8rem; margin-bottom: 6px; display: inline-block;">MyRadiance</a>
+            <div class="social-links">
+                <a href="https://www.instagram.com/" target="_blank">Instagram</a>
+                <a href="https://x.com/" target="_blank">X</a>
+                <a href="https://www.facebook.com/" target="_blank">Facebook</a>
+            </div>
+            <p>&copy; 2025 MyRadiance | All Rights Reserved</p>
+        </div>
+    </footer>
+    
+    <script>
+      // --- Mobile Menu Toggle ---
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', () => {
+          const isHidden = mobileMenu.style.display === 'none' || mobileMenu.style.display === '';
+          mobileMenu.style.display = isHidden ? 'block' : 'none';
+        });
+      }
+
+      // --- Newsletter Form Submission ---
+      const newsletterForm = document.getElementById('newsletter-form');
+      const newsletterEmail = document.getElementById('newsletter-email');
+      const newsletterMessage = document.getElementById('newsletter-message');
+      if (newsletterForm) {
+        newsletterForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          const email = newsletterEmail.value;
+          if (email) {
+            newsletterMessage.textContent = "Thank you for subscribing!";
+            newsletterMessage.style.color = 'green';
+            newsletterEmail.value = '';
+          } else {
+            newsletterMessage.textContent = "Please enter a valid email address.";
+            newsletterMessage.style.color = 'red';
+          }
+          setTimeout(() => {
+            newsletterMessage.textContent = '';
+          }, 4000);
+        });
+      }
+
+      // --- START: Gemini AI Feature Script ---
+      const getTipBtn = document.getElementById('get-tip-btn');
+      const skinTypeSelect = document.getElementById('skin-type-select');
+      const skinConcernSelect = document.getElementById('skin-concern-select');
+      const geminiResultDiv = document.getElementById('gemini-result');
+
+    //  // const callGeminiApi = async (prompt, systemInstruction) => {
+    //       const apiKey = ""; 
+    //       const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+    //       const payload = {
+    //           contents: [{ parts: [{ text: prompt }] }],
+    //           systemInstruction: {
+    //               parts: [{ text: systemInstruction }]
+    //           },
+    //       };
+
+    //       let response;
+    //       let retries = 3;
+    //       let delay = 1000;
+
+    //       for (let i = 0; i < retries; i++) {
+    //           try {
+    //               response = await fetch(apiUrl, {
+    //                   method: 'POST',
+    //                   headers: { 'Content-Type': 'application/json' },
+    //                   body: JSON.stringify(payload)
+    //               });
+
+    //               if (response.ok) {
+    //                   const result = await response.json();
+    //                   const candidate = result.candidates?.[0];
+    //                   if (candidate && candidate.content?.parts?.[0]?.text) {
+    //                       return candidate.content.parts[0].text;
+    //                   }
+    //               }
+    //           } catch (error) {
+    //               // Network or other fetch-related error
+    //           }
+    //           await new Promise(res => setTimeout(res, delay));
+    //           delay *= 2; // Exponential backoff
+    //       }
+    //       return "Sorry, I couldn't generate a tip right now. Please try again later.";
+    //   };
+
+    const callGeminiApi = async (prompt, systemInstruction) => {
+          // This is a "mock" function for the demo.
+          // It waits 1.5 seconds, then returns a fake response.
+          console.log("Simulating AI tip generation for:", prompt);
+
+          return new Promise(resolve => {
+              setTimeout(() => {
+                  const skinType = document.getElementById('skin-type-select').value;
+                  const skinConcern = document.getElementById('skin-concern-select').value;
+                  const fakeTip = `For ${skinType} skin with ${skinConcern}, try to gently exfoliate once a week to help with cell turnover. Always follow up with a non-comedogenic moisturizer to protect your skin barrier!`;
+                  resolve(fakeTip);
+              }, 1500); // 1.5 second delay
+          });
+      };
+
+      if (getTipBtn) {
+          getTipBtn.addEventListener('click', async () => {
+              const skinType = skinTypeSelect.value;
+              const skinConcern = skinConcernSelect.value;
+              
+              geminiResultDiv.innerHTML = '<div class="loading-spinner"></div>';
+
+              const systemPrompt = "You are a friendly and encouraging skincare expert. Provide a single, concise, and actionable tip (no more than 2-3 sentences). The tone should be positive and easy for a beginner to understand. Do not give medical advice.";
+              const userQuery = `Give me one unique, simple, and actionable skincare tip for someone with ${skinType} skin who is concerned about ${skinConcern}.`;
+              
+              const tip = await callGeminiApi(userQuery, systemPrompt);
+              
+              geminiResultDiv.innerHTML = `<p>${tip}</p>`;
+          });
+      }
+      // --- END: Gemini AI Feature Script ---
+
+    </script>
+
+</body>
+</html>
+

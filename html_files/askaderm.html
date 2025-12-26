@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyRadiance - Doctor Consultation</title>
+  <!-- Google Fonts for custom font pairing -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* --- Base & Reset Styles --- */
+    :root {
+      --brand-bg: #FCF8F3;
+      --brand-text: #3D405B;
+      --brand-primary: #81B29A;
+      --brand-primary-dark: #6E9C84;
+      --brand-secondary: #EAF4F4;
+      --brand-dark: #333333;
+      --font-sans: 'Inter', sans-serif;
+      --font-serif: 'Lora', serif;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      background-color: var(--brand-bg);
+      color: var(--brand-text);
+      line-height: 1.6;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-serif);
+      color: var(--brand-dark);
+      margin-top: 0;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 2rem; }
+    h3 { font-size: 1.5rem; }
+    h4 { font-size: 1.25rem; }
+    p { margin-top: 0; margin-bottom: 1rem; }
+    a { color: inherit; text-decoration: none; }
+
+    /* --- Layout & Reusable Classes --- */
+    .container {
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .section {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    /* --- NEW: Reusable Button Styles --- */
+    .btn {
+        display: inline-block;
+        padding: 12px 28px;
+        border-radius: 9999px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+        cursor: pointer;
+        border: none;
+    }
+
+    .btn-primary {
+        background-color: var(--brand-primary);
+        color: #fff;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--brand-primary-dark);
+        transform: translateY(-2px);
+    }
+    /* --- END: New Button Styles --- */
+
+    /* --- Header & Navigation --- */
+    .main-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background-color: rgba(252, 248, 243, 0.9);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      padding: 1rem 0;
+    }
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--brand-dark);
+    }
+    .desktop-nav {
+      display: none; /* Hidden on mobile */
+    }
+    .desktop-nav a {
+      font-weight: 600;
+      margin-left: 2rem;
+      transition: color 0.2s;
+    }
+    .desktop-nav a:hover {
+      color: var(--brand-primary);
+    }
+    .desktop-nav a.nav-button {
+      background-color: var(--brand-primary);
+      color: white;
+      padding: 0.5rem 1.25rem;
+      border-radius: 9999px;
+      transition: background-color 0.2s;
+    }
+    .desktop-nav a.nav-button:hover {
+      background-color: var(--brand-primary-dark);
+      color: white;
+    }
+    .mobile-menu-button {
+      padding: 0.5rem;
+      border-radius: 0.375rem;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+    .mobile-menu-button svg {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+    .mobile-menu {
+      display: none; /* Initially hidden */
+      background-color: var(--brand-bg);
+      padding-bottom: 1rem;
+    }
+    .mobile-menu a {
+      display: block;
+      text-align: center;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .mobile-menu a:hover {
+      background-color: var(--brand-secondary);
+    }
+
+    /* --- Hero Section --- */
+    .hero {
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5rem 1rem;
+      background-image: linear-gradient(rgba(252, 248, 243, 0.7), rgba(252, 248, 243, 0.3)), url('../imgs/askderm.png');
+      background-size: cover;
+      background-position: center;
+    }
+    .hero .container {
+      max-width: 800px;
+    }
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    .hero p {
+        font-size: 1.125rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1rem;
+        color: #333333;
+    }
+
+    /* --- How It Works Section --- */
+    .how-it-works-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .how-it-works-card {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+    .how-it-works-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    }
+    .step-number {
+      height: 3.5rem;
+      width: 3.5rem;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background-color: var(--brand-primary);
+      color: white;
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+
+    /* --- Consultation Section --- */
+    .consultation-section { background-color: var(--brand-secondary); }
+    .consultation-flex {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+      margin-top: 3rem;
+    }
+    .consult-form-wrapper {
+        flex: 1.5;
+    }
+    .consult-info-wrapper {
+        flex: 1;
+    }
+    .consult-form {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    }
+    .form-group { margin-bottom: 1.5rem; }
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 0.5rem;
+      transition: all 0.2s;
+      font-family: inherit;
+      font-size: 1rem;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--brand-primary);
+      box-shadow: 0 0 0 3px rgba(129, 178, 154, 0.2);
+    }
+    .submit-btn {
+      width: 100%;
+      background-color: var(--brand-primary);
+      color: white;
+      font-weight: bold;
+      padding: 0.8rem 1.5rem;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .submit-btn:hover {
+      background-color: var(--brand-primary-dark);
+      transform: scale(1.02);
+    }
+    #form-message {
+      text-align: center;
+      font-weight: 600;
+      padding-top: 0.5rem;
+      min-height: 24px;
+    }
+    .form-message.success { color: #16a34a; }
+    .form-message.error { color: #dc2626; }
+    
+    .info-card {
+      background-color: white;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #e5e7eb;
+      margin-top: 1rem;
+    }
+    .info-card h4 {
+      display: flex;
+      align-items: center;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+    .info-card .icon {
+      flex-shrink: 0;
+      margin-right: 1rem;
+      height: 2rem;
+      width: 2rem;
+      border-radius: 50%;
+      background-color: var(--brand-primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-sans);
+      font-weight: bold;
+    }
+    .info-card p {
+      padding-left: 3rem;
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    .disclaimer-box {
+      margin-top: 1.5rem;
+      background-color: #fffbeb;
+      border-left: 4px solid #f59e0b;
+      color: #b45309;
+      padding: 1rem;
+      border-radius: 0 0.5rem 0.5rem 0;
+    }
+    .disclaimer-box h4 { font-family: var(--font-sans); font-weight: bold; }
+    .disclaimer-box p { font-size: 0.9rem; margin-bottom: 0; }
+
+    /* --- Doctors Section --- */
+    .doctors-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+    .doctor-card {
+        background-color: #fff;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+    .doctor-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    }
+    .doctor-card img {
+        width: 8rem;
+        height: 8rem;
+        border-radius: 50%;
+        margin: 0 auto;
+        border: 4px solid var(--brand-secondary);
+        display: block;
+    }
+    .doctor-card h4 { margin-top: 1rem; }
+    .doctor-card .specialty {
+        color: var(--brand-primary);
+        font-weight: 600;
+        margin-top: 0.25rem;
+        margin-bottom: 0.5rem;
+    }
+    .doctor-card .bio { 
+        font-size: 0.9rem; 
+        margin-bottom: 1rem; /* Added margin */
+    }
+    /* NEW: Styles for Rating and Education */
+    .doctor-rating {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 1rem;
+        margin-bottom: 0.25rem;
+    }
+    .doctor-rating .star {
+        color: #f59e0b; /* Amber/Gold color */
+        font-size: 1.25rem;
+        line-height: 1;
+    }
+    .doctor-rating .rating-text {
+        margin-left: 0.5rem;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+    .doctor-card .education {
+        font-size: 0.85rem;
+        font-style: italic;
+        color: #6b7280; /* Gray color */
+        margin-bottom: 0;
+    }
+    /* --- End of New Styles --- */
+
+    /* --- FAQ Section --- */
+    .faq-section { background-color: var(--brand-secondary); }
+    .faq-container {
+        max-width: 800px;
+        margin: 3rem auto 0;
+    }
+    .faq-item {
+        background-color: white;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        border-left: 4px solid var(--brand-primary);
+        margin-bottom: 1rem;
+    }
+    .faq-item p { margin-bottom: 0; }
+    
+    /* --- Footer --- */
+    .footer {
+        background-color: var(--brand-dark);
+        color: white;
+        padding: 2rem 0;
+    }
+    .footer p { margin-bottom: 0; }
+
+    /* --- Responsive --- */
+    @media (min-width: 768px) {
+      .mobile-menu-button { display: none; }
+      .desktop-nav { display: flex; align-items: center; }
+      h1 { font-size: 3.5rem; }
+      h2 { font-size: 2.5rem; }
+      .section {
+        padding-top: 6rem;
+        padding-bottom: 6rem;
+      }
+      .how-it-works-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .doctors-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    @media (min-width: 1024px) {
+      .consultation-flex {
+        flex-direction: row;
+        align-items: flex-start;
+      }
+    }
+
+    /* --- Gemini Helper Button --- */
+    .label-helper-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    .form-group label {
+      margin-bottom: 0; /* Remove default margin as it's now in the wrapper */
+    }
+    .gemini-helper-btn {
+      background: linear-gradient(145deg, #eaf4f4, #cde4de);
+      border: 1px solid var(--brand-primary);
+      color: var(--brand-text);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.3rem 0.6rem;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .gemini-helper-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .gemini-helper-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* --- Gemini AI Modal --- */
+    .gemini-modal {
+      display: none; /* Hidden by default */
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+    }
+    .gemini-modal-content {
+      background-color: #fefefe;
+      margin: auto;
+      padding: 2rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+    }
+    .gemini-loader {
+      display: none; /* Hidden by default */
+    }
+    .gemini-loader p {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--brand-dark);
+      margin-top: 1rem;
+      margin-bottom: 0;
+    }
+    .gemini-error {
+      display: none; /* Hidden by default */
+    }
+    .gemini-error h4 {
+      color: #dc2626;
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    .gemini-error p {
+      margin-bottom: 1.5rem;
+    }
+    .gemini-error-close-btn {
+      background-color: var(--brand-primary);
+      color: white;
+      font-weight: bold;
+      padding: 0.6rem 1.2rem;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .gemini-error-close-btn:hover {
+      background-color: var(--brand-primary-dark);
+    }
+
+    /* Spinner */
+    .spinner {
+      border: 5px solid var(--brand-secondary);
+      border-top: 5px solid var(--brand-primary);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Gemini AI Helper Modal -->
+  <div id="gemini-modal" class="gemini-modal">
+    <div class="gemini-modal-content">
+      <div id="gemini-loader" class="gemini-loader">
+        <div class="spinner"></div>
+        <p>✨ Asking our AI assistant for help...</p>
+      </div>
+      <div id="gemini-error" class="gemini-error">
+        <h4>AI Assistant Error</h4>
+        <p id="gemini-error-message"></p>
+        <button id="gemini-error-close" class="gemini-error-close-btn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header Section -->
+  <header class="main-header">
+    <!-- ... existing header content ... -->
+    <div class="container">
+      <div class="header-content">
+        <a href="../index.html" class="logo">MyRadiance</a>
+        
+        <nav class="desktop-nav">
+          <a href="skinscience.html">Skin Science</a>
+          <a href="remedies.html">Remedies</a>
+          <a href="products.html">Products</a>
+          <a href="about.html">About Us</a>
+          <a href="askaderm.html" class="nav-button">Ask a Derm</a>
+        </nav>
+
+        <button id="mobile-menu-button" class="mobile-menu-button" aria-label="Open menu">
+          <svg stroke="currentColor" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobile-menu" class="mobile-menu">
+      <a href="skinscience.html">Skin Science</a>
+      <a href="remedies.html">Remedies</a>
+      <a href="about.html">About Us</a>
+      <a href="askaderm.html">Consultation</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ... existing hero and how-it-works sections ... -->
+    <section id="home" class="hero text-center">
+      <div class="container">
+        <h1>Connect with a Skincare Professional</h1>
+        <p>Get personalized advice from a certified dermatologist. Start your journey to healthier skin today by filling out our secure consultation form.</p>
+        <!-- NEW: Scroll Button -->
+        <a href="#consultation" class="btn btn-primary" style="margin-top: 1rem;">Start Consultation</a>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="section text-center" style="padding-top: 2rem;">
+      <div class="container">
+        <h2>How It Works</h2>
+        <p style="max-width: 600px; margin: 0.5rem auto 0;">A simple, three-step process to get expert skincare advice.</p>
+        <div class="how-it-works-grid">
+          <div class="how-it-works-card">
+            <div class="step-number">1</div>
+            <h3>Submit Your Case</h3>
+            <p>Fill out the secure form with details about your skin concern and upload photos if possible.</p>
+          </div>
+          <div class="how-it-works-card">
+            <div class="step-number">2</div>
+            <h3>Doctor Review</h3>
+            <p>A certified dermatologist will review your case within 24-48 hours.</p>
+          </div>
+          <div class="how-it-works-card">
+            <div class="step-number">3</div>
+            <h3>Get Your Plan</h3>
+            <p>Receive a personalized skincare plan and product recommendations directly to your email.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Consultation Form Section -->
+    <section id="consultation" class="section consultation-section">
+      <div class="container">
+        <h2 class="text-center">Start Your Consultation</h2>
+        <div class="consultation-flex">
+          
+          <div class="consult-form-wrapper">
+            <form id="consult-form" class="consult-form">
+              <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" placeholder="Enter your full name" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Your Email</label>
+                <input type="email" id="email" placeholder="Where we'll send your plan" required>
+              </div>
+              <div class="form-group">
+                <label for="concern">Primary Concern</label>
+                <select id="concern" required>
+                  <option value="" disabled selected>Select your main concern...</option>
+                  <option value="acne">Acne & Breakouts</option>
+                  <option value="dryness">Dryness & Flakiness</option>
+                  <option value="redness">Redness & Rosacea</option>
+                  <option value="aging">Fine Lines & Aging</option>
+                  <option valueD="pigmentation">Dark Spots & Pigmentation</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <!-- UPDATED FORM GROUP FOR MESSAGE -->
+              <div class="form-group">
+                <div class="label-helper-wrapper">
+                  <label for="message">Describe Your Concern</label>
+                  <button type="button" id="gemini-helper-btn" class="gemini-helper-btn">✨ Get Writing Help</button>
+                </div>
+                <textarea id="message" rows="5" placeholder="Please describe your symptoms, what you've tried, and your skin goals." required></textarea>
+              </div>
+              <!-- END OF UPDATED FORM GROUP -->
+              <div class="form-group">
+                <label for="photo">Upload a Photo (Optional)</label>
+                <input type="file" id="photo" accept="image/*">
+                <p style="font-size: 0.8rem; color: #6b7280; margin-top: 0.5rem;">A clear photo of the affected area helps our doctors provide a more accurate plan.</p>
+              </div>
+              <button type="submit" class="submit-btn">Submit for Review</button>
+              <p id="form-message" class="form-message"></p>
+            </form>
+          </div>
+
+          <div class="consult-info-wrapper">
+            <!-- ... existing info wrapper content ... -->
+            <h3>Your Personalized Path to Clearer Skin</h3>
+            <p>Our goal is to provide you with a clear, actionable, and confidential plan. Here’s what you’ll receive after our dermatologists review your case:</p>
+            <div>
+              <div class="info-card">
+                  <h4><span class="icon">1</span>In-Depth Analysis</h4>
+                  <p>A detailed review of your submitted concerns and photos to understand the root cause of your issues.</p>
+              </div>
+              <div class="info-card">
+                  <h4><span class="icon">2</span>Custom Skincare Routine</h4>
+                  <p>A step-by-step morning and evening routine with recommendations for effective over-the-counter products.</p>
+              </div>
+              <div class="info-card">
+                  <h4><span class="icon">3</span>Lifestyle & Diet Tips</h4>
+                  <p>Expert advice on how factors like diet and stress might be impacting your skin, and how to manage them.</p>
+              </div>
+            </div>
+            <div class="disclaimer-box">
+                <h4>For Demonstration Only</h4>
+                <p>This is a demo for a project. No data is being saved or sent to a doctor. The form submission will only show a success message.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ... existing doctors and faq sections ... -->
+    <section class="section text-center">
+        <div class="container">
+            <h2>Meet Our Dermatologists</h2>
+            <p style="max-width: 600px; margin: 0.5rem auto 0;">Our board-certified dermatologists are committed to providing you with the highest quality of care.</p>
+            <div class="doctors-grid">
+                
+                <div class="doctor-card">
+                    <img loading="lazy" src="https://placehold.co/150x150/EAF4F4/3D405B?text=Dr.+Shetty" alt="Photo of Dr. Ekta Shetty">
+                    <h4>Dr. Ekta Shetty</h4>
+                    <!-- NEW: Rating -->
+                    <div class="doctor-rating">
+                      <span class="star">&starf;</span>
+                      <span class="star">&starf;</span>
+                      <span class="star">&starf;</span>
+                      <span class="star">&starf;</span>
+                      <span class="star">&starf;</span>
+                      <span class="rating-text">(4.9)</span>
+                    </div>
+                    <p class="specialty">Acne & Rosacea Specialist</p>
+                    <p class="bio">Dr. Shetty is a leading expert in treating inflammatory skin conditions with a focus on holistic patient care.</p>
+                    <!-- NEW: Education -->
+                    <p class="education">M.D. Dermatology, AIIMS Delhi</p>
+                </div>
+                
+                <div class="doctor-card">
+                    <img loading="lazy"src="https://placehold.co/150x150/EAF4F4/3D405B?text=Dr.+Gupta" alt="Photo of Dr. Raj Gupta">
+                    <h4>Dr. Raj Gupta</h4>
+                    <!-- NEW: Rating -->
+                    <div class="doctor-rating">
+                      <span class="star">&starf;</span>
+                      <span class="star">&starf;</span>
+                      <span class="star">&starf;</span>
+                      <span class="star">&starf;</span>
+                      <span classs="star">&star;</span> <!-- Half star or empty star -->
+                      <span class="rating-text">(4.7)</span>
+                    </div>
+                    <p class="specialty">Anti-Aging & Pigmentation</p>
+                    <p class="bio">With over 15 years of experience, Dr. Gupta specializes in cosmetic dermatology and laser treatments.</p>
+                    <!-- NEW: Education -->
+                    <p class="education">Fellowship in Cosmetic Dermatology, NY</p>
+                </div>
+                
+                <div class="doctor-card">
+                    <img loading="lazy" src="https://placehold.co/150x150/EAF4F4/3D405B?text=Dr.+Zane" alt="Photo of Dr. Maria Zane">
+                    <h4>Dr. Maria Zane</h4>
+                    <!-- NEW: Rating -->
+                    <div class="doctor-rating">
+                      <span class="star">&starf;</span>
+                      <span class="star">&starf;</span>
+                      <span class="star">&starf;</span>
+                      <span class="star">&starf;</span>
+                      <span class="star">&starf;</span>
+                      <span class="rating-text">(4.8)</span>
+                    </div>
+                    <p class="specialty">Sensitive Skin & Eczema</p>
+                    <p class="bio">Dr. Zane is passionate about helping patients with sensitive skin find gentle, effective, long-term solutions.</p>
+                    <!-- NEW: Education -->
+                    <p class="education">M.D. Dermatology, CMC Vellore</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section faq-section">
+        <div class="container">
+            <h2 class="text-center">Frequently Asked Questions</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <h4>Is my personal information secure?</h4>
+                    <p>Absolutely. We use industry-standard encryption to protect your data. For this project demo, no information is actually stored or transmitted.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>What kind of advice will I receive?</h4>
+                    <p>You will receive a personalized skincare routine, recommendations for over-the-counter products, and lifestyle tips. We do not prescribe medication through this service.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>How long does it take to get a response?</h4>
+                    <p>Our goal is to respond to all consultations within 48 business hours. You will receive an email notification once your personalized plan is ready.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer text-center">
+    <div class="container">
+      <p>&copy; 2025 MyRadiance. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // --- Mobile Menu Toggle ---
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuButton.addEventListener('click', () => {
+      const isHidden = mobileMenu.style.display === 'none' || mobileMenu.style.display === '';
+      mobileMenu.style.display = isHidden ? 'block' : 'none';
+    });
+
+    // --- Get DOM Elements for Forms ---
+    const consultForm = document.getElementById('consult-form');
+    const formMessage = document.getElementById('form-message');
+    const concernSelect = document.getElementById('concern');
+    const messageTextarea = document.getElementById('message');
+
+    /**
+     * Calls the Gemini API with exponential backoff.
+     * @param {string} userQuery The user's prompt.
+     * @param {string} systemPrompt The system instruction.
+     * @param {number} maxRetries Maximum number of retries.
+     * @returns {Promise<string>} The generated text.
+     */
+
+
+    // async function callGeminiAPI(userQuery, systemPrompt, maxRetries = 3) {
+    //   const apiKey = ""; // API key is handled by the environment
+    //   const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+    //   const payload = {
+    //     contents: [{ parts: [{ text: userQuery }] }],
+    //     systemInstruction: {
+    //       parts: [{ text: systemPrompt }]
+    //     },
+    //   };
+
+    //   let delay = 1000; // Initial delay 1 second
+    //   for (let i = 0; i <= maxRetries; i++) {
+    //     try {
+    //       const response = await fetch(apiUrl, {
+    //         method: 'POST',
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify(payload)
+    //       });
+
+    //       if (!response.ok) {
+    //         if (response.status === 429 || response.status >= 500) {
+    //           // Throttling or server error, worth retrying
+    //           throw new Error(`Retryable error: ${response.status}`);
+    //         } else {
+    //           // Other client-side error, don't retry
+    //           const errorBody = await response.json();
+    //           console.error("API Error (non-retryable):", errorBody);
+    //           throw new Error(`API request failed with status ${response.status}`);
+    //         }
+    //       }
+
+    //       const result = await response.json();
+    //       const candidate = result.candidates?.[0];
+
+    //       if (candidate && candidate.content?.parts?.[0]?.text) {
+    //         return candidate.content.parts[0].text;
+    //       } else {
+    //         console.error("Invalid response structure:", result);
+    //         throw new Error("No valid content found in API response.");
+    //       }
+
+    //     } catch (error) {
+    //       if (i === maxRetries) {
+    //         // Max retries reached
+    //         console.error("Max retries reached. Error:", error.message);
+    //         throw error; // Re-throw the last error
+    //       }
+    //       // Don't log retry attempts as errors in the console
+    //       // console.log(`Attempt ${i + 1} failed, retrying in ${delay}ms...`);
+    //       await new Promise(resolve => setTimeout(resolve, delay));
+    //       delay *= 2; // Exponential backoff
+    //     }
+    //   }
+    //   // This part should not be reachable if logic is correct
+    //   throw new Error("Failed to get response from API after retries.");
+    // }
+
+    async function callGeminiAPI(userQuery, systemPrompt, maxRetries = 3) {
+        // This is a "mock" function for the demo.
+        // It waits 1.5 seconds, then returns a fake response.
+        console.log("Simulating AI writing help for:", userQuery);
+
+        return new Promise(resolve => {
+            setTimeout(() => {
+                const fakeQuestions = "Here are a few things to help describe your concern:\n- How long have you had this issue?\n- Does it itch, burn, or feel painful?\n- What products have you tried already?\n- Does anything seem to make it better or worse?";
+                resolve(fakeQuestions);
+            }, 1500); // 1.5 second delay
+        });
+    }
+
+    // --- Gemini AI Helper ---
+    const geminiButton = document.getElementById('gemini-helper-btn');
+    const geminiModal = document.getElementById('gemini-modal');
+    const geminiLoader = document.getElementById('gemini-loader');
+    const geminiError = document.getElementById('gemini-error');
+    const geminiErrorMessage = document.getElementById('gemini-error-message');
+    const geminiErrorClose = document.getElementById('gemini-error-close');
+    
+    function showModal(showLoader = true, errorMessage = '') {
+      geminiModal.style.display = 'flex';
+      if (showLoader) {
+        geminiLoader.style.display = 'block';
+        geminiError.style.display = 'none';
+      } else {
+        geminiLoader.style.display = 'none';
+        geminiError.style.display = 'block';
+        geminiErrorMessage.textContent = errorMessage;
+      }
+    }
+
+    function hideModal() {
+      geminiModal.style.display = 'none';
+    }
+
+    geminiErrorClose.addEventListener('click', hideModal);
+    
+    if (geminiButton) {
+      geminiButton.addEventListener('click', async () => {
+        const selectedConcern = concernSelect.options[concernSelect.selectedIndex].text;
+        const concernValue = concernSelect.value;
+
+        if (!concernValue) {
+          showModal(false, "Please select your 'Primary Concern' from the dropdown first. This helps the AI assistant give you relevant questions.");
+          return;
+        }
+
+        geminiButton.disabled = true;
+        geminiButton.textContent = "Loading...";
+        showModal(true); // Show loader
+
+        const systemPrompt = "You are a helpful dermatology assistant. Your goal is to help a user describe their skin concern for a consultation form. Based on their selected primary concern, provide a short list of 5-7 key questions as a bulleted list. This list will be inserted into a textarea to guide them. Start with a brief encouraging sentence, then the list. Do not use markdown formatting for the list, just use '-' or '*' for bullets. Keep the entire response under 75 words.";
+        
+        const userQuery = `My primary concern is: "${selectedConcern}". Please give me a list of questions to help me describe this better for a dermatologist.`;
+
+        try {
+          const responseText = await callGeminiAPI(userQuery, systemPrompt);
+          
+          // Add a newline if textarea is not empty
+          const prefix = messageTextarea.value.trim().length > 0 ? '\n\n' : '';
+          
+          messageTextarea.value += `${prefix}${responseText}`;
+          messageTextarea.focus(); // Focus the textarea so the user can start typing
+          hideModal();
+
+        } catch (error) {
+          console.error("Gemini API call failed:", error);
+          showModal(false, "Oops! The AI assistant is currently unavailable. Please try describing your concern manually. You can mention things like duration, symptoms (itchy, painful), and treatments you've already tried.");
+        } finally {
+          geminiButton.disabled = false;
+          geminiButton.textContent = "✨ Get Writing Help";
+        }
+      });
+    }
+
+    // --- Consultation Form Submission ---
+    if (consultForm) {
+      consultForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const concern = concernSelect.value; // Use variable from above
+        const message = messageTextarea.value; // Use variable from above
+
+        formMessage.classList.remove('success', 'error');
+
+        if (name && email && concern && message) {
+          formMessage.textContent = "Thank you! Your consultation request has been submitted.";
+          formMessage.classList.add('success');
+          consultForm.reset();
+        } else {
+          formMessage.textContent = "Please fill out all required fields.";
+          formMessage.classList.add('error');
+        }
+        
+        setTimeout(() => {
+          formMessage.textContent = '';
+          formMessage.classList.remove('success', 'error');
+        }, 5000);
+      });
+    }
+  </script>
+
+</body>
+</html>
+

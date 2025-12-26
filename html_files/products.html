@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyRadiance - Recommended Products</title>
+    
+    <!-- CSS styles adapted from your existing project files -->
+    <style>
+        /* --- 1. General & Reset Styles --- */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #FCF8F3;
+            color: #3D405B;
+            line-height: 1.6;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        /* --- 2. Reusable Components & Layout --- */
+        .container {
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .section {
+            padding-top: 60px;
+            padding-bottom: 60px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 9999px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: #81B29A;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: #6E9C84;
+            transform: translateY(-2px);
+        }
+
+        /* --- 3. Typography --- */
+        h1, h2, h3, h4 {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: #333333;
+            margin-top: 0;
+        }
+
+        h1 { font-size: 3rem; margin-bottom: 1rem; }
+        h2 { font-size: 2.5rem; margin-bottom: 20px; }
+        h3 { font-size: 1.25rem; margin-bottom: 0.75rem; }
+        h4 { font-size: 1.1rem; }
+        p { margin: 0 0 1rem 0; }
+        
+        /* --- 4. Header / Navbar --- */
+        .main-header {
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+            background-color: rgba(252, 248, 243, 0.9);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .main-nav a {
+            color: #3D405B;
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: bold;
+        }
+
+        .main-nav a:hover {
+            color: #333;
+        }
+        
+        .main-nav .nav-button {
+            background-color: #81B29A;
+            color: white;
+            padding: 0.5rem 1.25rem;
+            border-radius: 9999px;
+            transition: background-color 0.2s;
+        }
+        
+        .main-nav .nav-button:hover {
+             background-color: #6E9C84;
+             color: white;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        
+        .mobile-menu-btn svg {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+        
+        .mobile-menu {
+          display: none;
+          background-color: #FCF8F3;
+          padding-bottom: 1rem;
+        }
+        .mobile-menu a {
+          display: block;
+          text-align: center;
+          padding: 0.75rem 1rem;
+          font-weight: 600;
+          font-size: 0.9rem;
+          color: #3D405B;
+          text-decoration: none;
+        }
+        .mobile-menu a:hover {
+          background-color: #EAF4F4;
+        }
+
+        /* --- 5. Page-Specific Styles for Products --- */
+
+        /* Simple hero section */
+        .products-hero {
+            padding: 80px 20px;
+            text-align: center;
+            color: #333;
+            position: relative; /* For the overlay */
+            min-height: 65vh; /* Match other pages */
+            display: flex; /* To center content vertically */
+            align-items: center;
+            justify-content: center;
+
+            /* TODO: Add your hero image URL here! 
+              e.g., background-image: url('../imgs/your-product-hero.jpg');
+            */
+            background-image: url('../imgs/product1.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* This creates the light overlay, just like on your other pages */
+        .products-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.5); /* Light overlay */
+            z-index: 1;
+        }
+
+        /* Ensure content is above the overlay */
+        .products-hero .container {
+            position: relative;
+            z-index: 2;
+        }
+
+
+        /* Disclaimer box (adapted from askaderm.html) */
+        .disclaimer-box {
+            max-width: 800px;
+            margin: 0 auto; /* Center the box */
+            background-color: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            color: #b45309;
+            padding: 1.5rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+        .disclaimer-box h4 {
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            color: #b45309;
+            margin-bottom: 0.5rem;
+        }
+        .disclaimer-box p { 
+            font-size: 0.9rem; 
+            margin-bottom: 0; 
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        /* Product Card */
+        .product-card {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+        }
+
+        .product-card img {
+            max-width: 100%;
+            height: 180px; /* Uniform height */
+            object-fit: cover; /* Prevents stretching */
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background-color: #f0f4f8; /* BG for placeholder */
+        }
+        
+        .product-category {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #81B29A;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-card h3 {
+            font-size: 1.4rem; /* Slightly larger than default h3 */
+            margin-bottom: 0.5rem; /* Reduced margin to make space for price */
+        }
+
+        /* NEW STYLE FOR PRICE */
+        .product-price {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #3D405B; /* Use the main dark blue text color */
+            margin-bottom: 1rem;
+        }
+        
+        .product-card p {
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem; /* Reduced margin to make space for button */
+        }
+
+        /* NEW: Buy Now Button Style */
+        .btn-buy {
+            display: inline-block;
+            padding: 10px 24px;
+            border-radius: 9999px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            cursor: pointer;
+            border: 2px solid #81B29A; /* Green border */
+            background-color: #fff; /* White background */
+            color: #81B29A; /* Green text */
+            font-size: 0.9rem;
+            margin-top: 15px; /* Space above the button */
+        }
+
+        .btn-buy:hover {
+            background-color: #81B29A; /* Fill on hover */
+            color: #fff; /* White text on hover */
+        }
+
+
+        /* --- 6. Footer --- */
+        .footer {
+          padding-top: 15px; 
+          padding-bottom: 5px;
+          text-align: center; 
+          background-color: #333;
+          color: #f4f4f4;
+          font-size: 0.9rem; 
+        }
+
+        /* --- 7. Responsive --- */
+        @media (max-width: 992px) {
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+          h1 { font-size: 2.2rem; }
+          h2 { font-size: 1.8rem; }
+          .main-nav { display: none; }
+          .mobile-menu-btn { display: block; }
+
+          .product-grid {
+             grid-template-columns: 1fr;
+          }
+        }
+
+        /* --- 8. Modals --- */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 101; /* Above header */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background-color: #fff;
+            margin: auto;
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            text-align: left; /* Changed to left for the form */
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1rem;
+            color: #3D405B;
+        }
+        .modal-title {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 1.5rem;
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .close-modal {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-modal:hover, .close-modal:focus {
+            color: black;
+        }
+
+        /* Form styles inside the modal */
+        .modal-form-group {
+            margin-bottom: 1.5rem;
+        }
+        .modal-form-group label {
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .modal-form-group input[type="radio"] {
+            margin-right: 10px;
+            /* Simple styling for the radio button */
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #81B29A;
+            border-radius: 50%;
+            cursor: pointer;
+            position: relative;
+        }
+        .modal-form-group input[type="radio"]:checked {
+            background-color: #81B29A;
+            border-color: #81B29A;
+        }
+        /* Add the inner dot */
+        .modal-form-group input[type="radio"]:checked::after {
+            content: '';
+            display: block;
+            width: 8px;
+            height: 8px;
+            background: #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .btn-confirm {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+        }
+
+        /* Success Message specific styles */
+        .success-modal-content {
+            text-align: center;
+            font-family: Georgia, serif;
+            font-size: 1.1rem;
+        }
+
+    </style>
+</head>
+<body>
+
+  <!-- Header Section -->
+  <header class="main-header">
+    <div class="container">
+      <a href="../index.html" class="logo">MyRadiance</a>
+      
+      <!-- This nav bar includes the new 'Products' link -->
+      <nav class="main-nav">
+        <a href="skinscience.html">Skin Science</a>
+        <a href="remedies.html">Remedies</a>
+        <a href="products.html">Products</a> <!-- NEW LINK -->
+        <a href="about.html">About Us</a>
+        <a href="askaderm.html" class="nav-button">Ask a Derm</a>
+      </nav>
+      
+      <button id="mobile-menu-button" class="mobile-menu-btn" aria-label="Open menu">
+        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"></path></svg>
+      </button>
+    </div>
+  </header>
+  
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="mobile-menu">
+      <a href="skinscience.html">Skin Science</a>
+      <a href="remedies.html">Remedies</a>
+      <a href="products.html">Products</a> <!-- NEW LINK -->
+      <a href="about.html">About Us</a>
+      <a href="askaderm.html">Ask a Derm</a>
+  </div>
+
+  <!-- Main Content -->
+  <main>
+    
+    <!-- Simple Hero Section -->
+    <section class="products-hero">
+      <div class="container">
+        <h1>Doctor Recommended Products</h1>
+        <p style="max-width: 700px; margin: 0 auto;">A curated list of effective, gentle products our dermatologists trust for common skin concerns.</p>
+      </div>
+    </section>
+
+    <!-- Disclaimer Section -->
+    <section class="section" style="padding-top: 40px; padding-bottom: 0;">
+        <div class="container">
+            <div class="disclaimer-box">
+                <h4>For Educational Purposes Only</h4>
+                <p>MyRadiance does not sell these products and is not affiliated with these brands. This list is for educational purposes to help you discuss options with your healthcare provider. Always consult your dermatologist before starting any new product.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Grid Section -->
+    <section class="section">
+      <div class="container">
+        <div class="product-grid">
+
+          <!-- Product Card 1 -->
+          <div class="product-card">
+            <img src="../imgs/Product2.jpg" alt="Gentle Skin Cleanser">
+            <div class="product-category">Cleanser</div>
+            <h3>Gentle Skin Cleanser</h3>
+            <div class="product-price">Approx. ₹549</div>
+            <p>A mild, non-irritating cleanser that soothes skin as it cleans. Perfect for all skin types, including sensitive.</p>
+            <button class="btn btn-buy">Buy Now</button>
+          </div>
+
+          <!-- Product Card 2 -->
+          <div class="product-card">
+            <img src="../imgs/Product3.png" alt="Lightweight Moisturizer">
+            <div class="product-category">Moisturizer</div>
+            <h3>Lightweight Moisturizer</h3>
+            <div class="product-price">Approx. ₹649</div>
+            <p>Oil-free and non-comedogenic. Provides essential hydration without clogging pores. Ideal for oily or combo skin.</p>
+            <button class="btn btn-buy">Buy Now</button>
+          </div>
+
+          <!-- Product Card 3 -->
+          <div class="product-card">
+            <img src="../imgs/Product4.jpg" alt="Hydrating Lotion">
+            <div class="product-category">Moisturizer</div>
+            <h3>Daily Hydrating Lotion</h3>
+            <div class="product-price">Approx. ₹599</div>
+            <p>Lightweight and fast-absorbing lotion with Hyaluronic Acid for normal to dry skin. Locks in moisture.</p>
+            <button class="btn btn-buy">Buy Now</button>
+          </div>
+
+          <!-- Product Card 4 -->
+          <div class="product-card">
+            <img src="../imgs/Product5.png" alt="Intensive Repair Cream">
+            <div class="product-category">Moisturizer</div>
+            <h3>Intensive Repair Cream</h3>
+            <div class="product-price">Approx. ₹799</div>
+            <p>A rich, thick cream for very dry or compromised skin. Excellent for repairing the skin barrier on face and body.</p>
+            <button class="btn btn-buy">Buy Now</button>
+          </div>
+
+          <!-- Product Card 5 -->
+          <div class="product-card">
+            <img src="../imgs/Product6.jpg" alt="Mineral Sunscreen SPF 50">
+            <div class="product-category">Sunscreen</div>
+            <h3>Mineral Sunscreen SPF 50</h3>
+            <div class="product-price">Approx. ₹749</div>
+            <p>Broad-spectrum protection with zinc oxide. This formula is gentle, water-resistant, and ideal for sensitive skin.</p>
+            <button class="btn btn-buy">Buy Now</button>
+          </div>
+
+          <!-- Product Card 6 -->
+          <div class="product-card">
+            <img src="../imgs/Product7.png" alt="Clear Facial Sunscreen SPF 30">
+            <div class="product-category">Sunscreen</div>
+            <h3>Clear Facial Sunscreen SPF 30</h3>
+            <div class="product-price">Approx. ₹699</div>
+            <p>Goes on completely clear with no white-cast. Wears perfectly under makeup while protecting from UVA/UVB rays.</p>
+            <button class="btn btn-buy">Buy Now</button>
+          </div>
+
+          <!-- Product Card 7 (NEW) -->
+          <div class="product-card">
+            <img src="../imgs/Product8.png" alt="Vitamin C Serum">
+            <div class="product-category">Serum</div>
+            <h3>Brightening Vitamin C Serum</h3>
+            <div class="product-price">Approx. ₹899</div>
+            <p>A potent antioxidant serum that helps to brighten dark spots and protect the skin from environmental damage.</p>
+            <button class="btn btn-buy">Buy Now</button>
+          </div>
+
+          <!-- Product Card 8 (NEW) -->
+          <div class="product-card">
+            <img src="../imgs/Product9.png" alt="Retinol Treatment">
+            <div class="product-category">Treatment</div>
+            <h3>Gentle Retinol Serum</h3>
+            <div class="product-price">Approx. ₹849</div>
+            <p>A beginner-friendly retinol treatment to help with fine lines and skin texture, formulated to minimize irritation.</p>
+            <button class="btn btn-buy">Buy Now</button>
+          </div>
+
+          <!-- Product Card 9 (NEW) -->
+          <div class="product-card">
+            <img src="../imgs/Product10.png" alt="Micellar Cleansing Water">
+            <div class="product-category">Makeup Remover</div>
+            <h3>Micellar Cleansing Water</h3>
+            <div class="product-price">Approx. ₹529</div>
+            <p>Gently lifts away makeup, dirt, and oil without harsh rubbing or rinsing. A great first step in a double cleanse.</p>
+            <button class="btn btn-buy">Buy Now</button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer text-center">
+    <div class="container">
+      <p>&copy; 2025 MyRadiance. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- UPDATED: This is now the FORM modal -->
+  <div id="buy-modal" class="modal">
+    <div class="modal-content">
+      <span id="close-buy-modal-btn" class="close-modal">&times;</span>
+      <h3 class="modal-title">Confirm Purchase</h3>
+      
+      <form id="prescription-form">
+        <div class="modal-form-group">
+          <label>
+            <input type="radio" name="prescription" value="have_prescription" checked>
+            I have a prescription for this product.
+          </label>
+        </div>
+        <div class="modal-form-group">
+          <label>
+            <input type="radio" name="prescription" value="doctor_recommendation">
+            I am buying this based on a doctor's recommendation.
+          </label>
+        </div>
+        
+        <button type="submit" id="confirm-purchase-btn" class="btn btn-primary btn-confirm">Confirm & Proceed</button>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- NEW: This is the success message modal -->
+  <div id="purchase-initiated-modal" class="modal">
+    <div class="modal-content success-modal-content"> <!-- <--- FIXED: Corrected 'classs' to 'class' -->
+      <span id="close-purchase-modal-btn" class="close-modal">&times;</span>
+      <h3 class="modal-title" style="margin-bottom: 1rem;">Purchase Initiated!</h3>
+      <p style="margin-bottom: 0; font-size: 1rem; font-family: Arial, Helvetica, sans-serif;">Please check your email for more details to process the buying and payment.</p>
+    </div>
+  </div>
+
+
+  <!-- JavaScript for Modals and Mobile Menu -->
+  <script>
+    // --- Mobile Menu Toggle ---
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (mobileMenuButton && mobileMenu) {
+      mobileMenuButton.addEventListener('click', () => {
+        const isHidden = mobileMenu.style.display === 'none' || mobileMenu.style.display === '';
+        mobileMenu.style.display = isHidden ? 'block' : 'none';
+      });
+    }
+
+    // --- Buy Button & Modal Logic ---
+    
+    // Get Modals
+    const buyModal = document.getElementById('buy-modal');
+    const purchaseModal = document.getElementById('purchase-initiated-modal');
+
+    // Get Close Buttons
+    const closeBuyModalBtn = document.getElementById('close-buy-modal-btn');
+    const closePurchaseModalBtn = document.getElementById('close-purchase-modal-btn');
+    
+    // Get Buttons and Forms
+    const buyButtons = document.querySelectorAll('.btn-buy');
+    const prescriptionForm = document.getElementById('prescription-form');
+
+    // 1. Open the form modal when any "Buy Now" button is clicked
+    buyButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        buyModal.style.display = 'flex';
+      });
+    });
+
+    // 2. Handle submitting the form
+    if (prescriptionForm) {
+      prescriptionForm.addEventListener('submit', (e) => {
+        e.preventDefault(); // Stop the form from reloading the page
+        buyModal.style.display = 'none'; // Close the form modal
+        purchaseModal.style.display = 'flex'; // Open the success modal
+      });
+    }
+
+    // 3. Handle closing the form modal (X button)
+    if (closeBuyModalBtn) {
+        closeBuyModalBtn.addEventListener('click', () => {
+          buyModal.style.display = 'none';
+        });
+    }
+
+    // 4. Handle closing the success modal (X button)
+    if (closePurchaseModalBtn) {
+        closePurchaseModalBtn.addEventListener('click', () => {
+          purchaseModal.style.display = 'none';
+        });
+    }
+
+    // 5. Handle closing modals by clicking outside of them
+    window.addEventListener('click', (event) => {
+      if (event.target == buyModal) {
+        buyModal.style.display = 'none';
+      }
+      if (event.target == purchaseModal) {
+        purchaseModal.style.display = 'none';
+      }
+    });
+
+  </script>
+
+</body>
+</html>
+
+
+

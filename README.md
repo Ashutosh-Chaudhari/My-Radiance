@@ -2,7 +2,7 @@
 
 A user-centric web application designed to provide structured, science-backed skincare guidance. This project addresses the common issues of information fragmentation and commercial bias found in traditional skincare platforms.
 
-##🚀 Live Demo
+## 🚀 Live Demo
 https://ashutosh-chaudhari.github.io/My-Radiance/index.html
 
 ## 🌟 The "Why" behind the Project
